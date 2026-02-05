@@ -5,8 +5,8 @@ parameters:
     paths:
         - app/
 
-    # Level 5 là mức độ kiểm tra trung bình, khá an toàn cho dự án mới
+    # Level 5 là mức độ vừa phải.
+    # Nếu vẫn báo lỗi linh tinh, bạn có thể hạ xuống level 0 để chạy thông suốt trước.
     level: 5
 
-    # Thay vì dòng cũ, hãy dùng dòng này nếu bạn muốn bỏ qua các lỗi về type của mảng
-    checkGenericClassInNonGenericObjectType: false
+    # Loại bỏ hoàn toàn các dòng checkGeneric... gây lỗi
