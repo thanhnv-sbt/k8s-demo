@@ -4,12 +4,4 @@ includes:
 parameters:
     paths:
         - app/
-
     level: 5
-
-    # Laravel-friendly
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
-
-    # Nếu chưa muốn CI fail vì logic test
-    reportUnmatchedIgnoredErrors: false
