@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ "main" ]
   push:
-    branches: [ "main" ] # Thêm push để bạn kiểm tra trực tiếp trên nhánh chính
+    branches: [ "main" ]
 
 jobs:
   phpstan:
@@ -18,9 +18,8 @@ jobs:
         with:
           php-version: '8.2'
           extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite
-          coverage: none # Tắt coverage để chạy nhanh hơn
+          coverage: none
 
-      # BƯỚC QUAN TRỌNG: Tạo file .env từ bản mẫu để artisan không báo lỗi
       - name: Create .env file
         run: cp .env.example .env
 
@@ -31,6 +30,4 @@ jobs:
         run: php artisan key:generate
 
       - name: Run PHPStan
-        # Quét app/ để tìm lỗi N+1 và lỗi logic
-        # Lưu ý: Đảm bảo bạn đã có file phpstan.neon ở thư mục gốc
         run: ./vendor/bin/phpstan analyse

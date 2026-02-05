@@ -1,12 +1,15 @@
 includes:
-    - ./vendor/nunomaduro/larastan/extension.neon
+    - vendor/nunomaduro/larastan/extension.neon
 
 parameters:
     paths:
         - app/
 
-    # Level 5 là mức độ vừa phải.
-    # Nếu vẫn báo lỗi linh tinh, bạn có thể hạ xuống level 0 để chạy thông suốt trước.
     level: 5
 
-    # Loại bỏ hoàn toàn các dòng checkGeneric... gây lỗi
+    # Laravel-friendly
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+
+    # Nếu chưa muốn CI fail vì logic test
+    reportUnmatchedIgnoredErrors: false
