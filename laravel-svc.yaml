@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: laravel-service
+spec:
+  selector:
+    app: laravel # Nó tìm các Pod có nhãn app: laravel để dẫn khách vào
+  ports:
+    - protocol: TCP
+      port: 80       # Cổng của Service
+      targetPort: 80 # Cổng của App bên trong Pod
+  type: LoadBalancer # Loại này giúp Docker Desktop mở một cổng ra máy thật của bạn
