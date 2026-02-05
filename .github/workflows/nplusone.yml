@@ -9,25 +9,18 @@ on:
 jobs:
   phpstan:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite
           coverage: none
 
-      - name: Create .env file
-        run: cp .env.example .env
+      - run: cp .env.example .env
+      - run: composer install --no-interaction --prefer-dist
+      - run: php artisan key:generate
 
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-
-      - name: Generate Key
-        run: php artisan key:generate
-
-      - name: Run PHPStan
+      - name: Run PHPStan (N+1)
         run: ./vendor/bin/phpstan analyse
