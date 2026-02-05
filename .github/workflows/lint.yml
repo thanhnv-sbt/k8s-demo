@@ -1,24 +1,30 @@
-name: Check Code Format
+name: Enterprise CI
 
 on:
   pull_request:
-    branches: [ "main" ] # Chạy mỗi khi có ai đó tạo Pull Request vào main
+    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-  php-lint:
+  static:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+          extensions: mbstring, pdo, sqlite
+          coverage: none
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
+      - run: composer install --no-interaction --prefer-dist
 
-      - name: Run Pint (Check Format)
-        # Lệnh này sẽ check xem code có đúng chuẩn không, nếu sai sẽ báo lỗi (exit 1)
+      - name: Code style (Pint)
         run: ./vendor/bin/pint --test
+
+      - name: Static analysis (PHPStan)
+        run: ./vendor/bin/phpstan analyse --memory-limit=1G
