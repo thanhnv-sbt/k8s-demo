@@ -11,7 +11,7 @@ class TestCicdController extends Controller
         $users = User::all();
 
         foreach ($users as $user) {
-            $user->fakePosts()->count();
+            $user->fakePosts();
         }
 
         return response()->json(['ok' => true]);
