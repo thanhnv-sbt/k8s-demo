@@ -1,0 +1,28 @@
+name: Static Analysis (N+1 Check)
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite # Cần đủ ext để chạy Laravel
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Generate Key
+        run: php artisan key:generate
+
+      - name: Run PHPStan
+        # Lệnh này sẽ quét toàn bộ folder app/ để tìm lỗi N+1 và lỗi logic
+        run: ./vendor/bin/phpstan analyse
