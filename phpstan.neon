@@ -4,5 +4,9 @@ includes:
 parameters:
     paths:
         - app/
-    level: 5 # Level càng cao check càng kỹ
-    checkMissingIterableValueType: false
+
+    # Level 5 là mức độ kiểm tra trung bình, khá an toàn cho dự án mới
+    level: 5
+
+    # Thay vì dòng cũ, hãy dùng dòng này nếu bạn muốn bỏ qua các lỗi về type của mảng
+    checkGenericClassInNonGenericObjectType: false
