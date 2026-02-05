@@ -48,9 +48,8 @@ class User extends Authenticatable
         ];
     }
 
-
-public function fakePosts(): HasMany
-{
-    return $this->hasMany(FakePost::class);
-}
+    public function fakePosts(): HasMany
+    {
+        return $this->hasMany(FakePost::class);
+    }
 }
