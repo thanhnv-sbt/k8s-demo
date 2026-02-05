@@ -15,7 +15,7 @@ spec:
       # 1. INIT CONTAINER: Chạy trước để chuẩn bị code
       initContainers:
       - name: install-code
-        image: thanh219/mymy-demo-container:v1
+        image: thanh219/mymy-demo-container:latest
         command: ["sh", "-c", "cp -R /var/www/. /shared-code/ && chmod -R 777 /shared-code/storage /shared-code/bootstrap/cache"]
         volumeMounts:
         - name: code-volume
@@ -24,7 +24,7 @@ spec:
       containers:
       # 2. CONTAINER APP (PHP-FPM)
       - name: laravel-app
-        image: thanh219/mymy-demo-container:v1
+        image: thanh219/mymy-demo-container:latest
         volumeMounts:
         - name: code-volume
           mountPath: /var/www
