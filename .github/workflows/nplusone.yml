@@ -3,6 +3,8 @@ name: Static Analysis (N+1 Check)
 on:
   pull_request:
     branches: [ "main" ]
+  push:
+    branches: [ "main" ] # Thêm push để bạn kiểm tra trực tiếp trên nhánh chính
 
 jobs:
   phpstan:
@@ -15,14 +17,20 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite # Cần đủ ext để chạy Laravel
+          extensions: dom, curl, libxml, mbstring, zip, pdo, sqlite, pdo_sqlite
+          coverage: none # Tắt coverage để chạy nhanh hơn
+
+      # BƯỚC QUAN TRỌNG: Tạo file .env từ bản mẫu để artisan không báo lỗi
+      - name: Create .env file
+        run: cp .env.example .env
 
       - name: Install Dependencies
-        run: composer install --prefer-dist --no-progress
+        run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Generate Key
         run: php artisan key:generate
 
       - name: Run PHPStan
-        # Lệnh này sẽ quét toàn bộ folder app/ để tìm lỗi N+1 và lỗi logic
+        # Quét app/ để tìm lỗi N+1 và lỗi logic
+        # Lưu ý: Đảm bảo bạn đã có file phpstan.neon ở thư mục gốc
         run: ./vendor/bin/phpstan analyse
