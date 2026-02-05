@@ -9,10 +9,10 @@ class TestCicdController extends Controller
 {
     public function index()
     {
-        $users = User::all(); // 1 query
+        $users = User::all();
 
         foreach ($users as $user) {
-            $posts = $user->posts()->get();
+            $user->tokens()->count();
         }
 
         return response()->json(['ok' => true]);
