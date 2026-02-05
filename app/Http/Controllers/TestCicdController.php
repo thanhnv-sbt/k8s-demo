@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
 class TestCicdController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $users = User::all();
 

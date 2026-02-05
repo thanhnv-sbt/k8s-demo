@@ -47,6 +47,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany<FakePost, self>
+     */
     public function fakePosts(): HasMany
     {
         return $this->hasMany(FakePost::class);
